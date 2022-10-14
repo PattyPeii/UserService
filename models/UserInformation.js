@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const memberSchema = new Schema(
+const userSchema = new Schema(
   {
-    name: String,
-    address: String,
+    user_id: String,
+    fullname: String,
     email: String,
-    telephone: String,
-    follow: Array,
+    phone: String,
+    birthday: Date,
   },
   {
     timestamps: {
@@ -17,4 +17,4 @@ const memberSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Member", memberSchema);
+module.exports = mongoose.model("UserInformation", userSchema);

@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const memberRouter = require("./routes/MemberRoutes");
+const UserInformationRouter = require("./routes/UserInformationRoutes");
 
 const app = express();
 
@@ -9,7 +9,7 @@ require("dotenv").config();
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/members", memberRouter);
+app.use("/information", UserInformationRouter);
 
 console.log(process.env.MONGODB_URI);
 
