@@ -1,5 +1,6 @@
 const UserModel = require("../models/UserInformation");
 
+
 exports.getAllUsers = async () => {
   return await UserModel.find();
 };
@@ -28,3 +29,4 @@ exports.updateUser = async (id, user) => {
 exports.deleteUser = async (id) => {
   return await UserModel.findOneAndDelete({ user_id: id });
 };
+

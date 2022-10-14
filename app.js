@@ -1,6 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const UserInformationRouter = require("./routes/UserInformationRoutes");
+var grpc = require("grpc");
+const PROTO_PATH="./proto/user.proto";
+var grpc = require("grpc");
+var protoLoader = require("@grpc/proto-loader");
+const userService = require("./services/UserInformationService");
 
 const app = express();
 
@@ -29,7 +34,38 @@ mongoose.connect(
   }
 );
 
+// config gRPC
+
+
+const server = new grpc.Server();
+module.server = server;
+server.bind(`0.0.0.0:${process.env.GRPC_PORT}`,grpc.ServerCredentials.createInsecure());
+
+var packageDefinition = protoLoader.loadSync(PROTO_PATH,{
+  keepCase: true,
+  longs: String,
+  enums: String,
+  arrays: true
+});
+var userProto =grpc.loadPackageDefinition(packageDefinition);
+
+server.addService(userProto.UserService.service,{
+  GetUserInformation: async (call,callback)=>{
+      let user = await userService.getUserById(call.request.user_id);
+      if(user) {
+          callback(null, user);
+      }else {
+          callback({
+              code: grpc.status.NOT_FOUND,
+              details: "Not found"
+          });
+      }
+  }
+});
+
 app.listen(process.env.API_PORT, () => {
+  server.start();
+  console.log(`gRPC Server is running on port ${process.env.GRPC_PORT}`);
   console.log(`Server is running on port ${process.env.API_PORT}`);
 });
 

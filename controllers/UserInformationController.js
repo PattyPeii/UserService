@@ -1,5 +1,7 @@
 const userService = require("../services/UserInformationService");
 
+
+
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
