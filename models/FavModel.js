@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema(
+const favSchema = new Schema(
   {
-    following_user_id: String,
-    follower_user_id: String,
+    user_id: String,
+    recipe_id: String,
   },
   {
     timestamps: {
@@ -14,4 +14,4 @@ const CommentSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Comment", CommentSchema);
+module.exports = mongoose.model("Fav", favSchema);

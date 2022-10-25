@@ -1,0 +1,31 @@
+GET http://localhost:8080/information
+
+###
+GET http://localhost:8080/information/1
+
+###
+POST  http://localhost:8080/information
+Content-Type: application/json
+
+{
+"user_id": 3,
+"fullname": "Patty",
+"email": "test@gmail.com",
+"phone": "099999999",
+"birthday": "1995-03-25"
+}
+
+###
+DELETE http://localhost:8080/information/2
+
+###
+PUT  http://localhost:8080/information/3
+Content-Type: application/json
+
+{
+"user_id": 3,
+"fullname": "Pattys",
+"email": "test@gmail.com",
+"phone": "099999999",
+"birthday": "1995-03-25"
+}

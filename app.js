@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const UserInformationRouter = require("./routes/UserInformationRoutes");
 const FollowRouter = require("./routes/FollowRoutes");
+const FavRouter = require("./routes/FavRoutes");
 
 var grpc = require("grpc");
 const PROTO_PATH="./proto/user.proto";
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/information", UserInformationRouter);
 app.use("/follow", FollowRouter);
+app.use("/fav", FavRouter);
 
 
 console.log(process.env.MONGODB_URI);
