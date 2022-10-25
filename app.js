@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const UserInformationRouter = require("./routes/UserInformationRoutes");
+const FollowRouter = require("./routes/FollowRoutes");
+
 var grpc = require("grpc");
 const PROTO_PATH="./proto/user.proto";
 var grpc = require("grpc");
@@ -15,6 +17,8 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/information", UserInformationRouter);
+app.use("/follow", FollowRouter);
+
 
 console.log(process.env.MONGODB_URI);
 
