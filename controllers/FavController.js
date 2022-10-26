@@ -10,21 +10,25 @@ exports.getFav = async (req, res) => {
 };
 
 exports.createFav = async (req, res) => {
-    console.log(req.body);
-    try {
-      const fav = await favService.createFav(req.body);
-      res.json({ data: fav, status: "success" });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
-  exports.deleteFav = async (req, res) => {
-    try {
-      const fav = await favService.deleteFav(req.params.id);
-      res.json({ data: fav, status: "success" });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
-
-
+  console.log(req.body);
+  try {
+    const fav = await favService.createFav({
+      user_id: req.params.user_id,
+      recipe_id: req.params.recipe_id,
+    });
+    res.json({ data: fav, status: "success" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+exports.deleteFav = async (req, res) => {
+  try {
+    const fav = await favService.deleteFav({
+        user_id: req.params.user_id,
+        recipe_id: req.params.recipe_id,
+      });
+    res.json({ data: fav, status: "success" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

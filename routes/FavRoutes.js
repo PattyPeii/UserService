@@ -8,7 +8,6 @@ const {
 const router = express.Router();
 
 router.route("/:user_id/favlist").get(getFav);
-router.route("/:recipe_id/favlist/create").post(createFav);
-// router.route("/:recipe_id/favlist/").delete(deleteFav);
+router.route("/:user_id/favlist/:recipe_id").get(createFav).delete(deleteFav);
 
 module.exports = router;
