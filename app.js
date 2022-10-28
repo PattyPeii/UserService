@@ -5,7 +5,7 @@ const FollowRouter = require("./routes/FollowRoutes");
 const FavRouter = require("./routes/FavRoutes");
 
 var grpc = require("grpc");
-const PROTO_PATH="./proto/user.proto";
+const PROTO_PATH = "./proto/user.proto";
 var grpc = require("grpc");
 var protoLoader = require("@grpc/proto-loader");
 const userService = require("./services/UserInformationService");
@@ -13,6 +13,15 @@ const userService = require("./services/UserInformationService");
 const app = express();
 
 require("dotenv").config();
+const cors = require("cors");
+app.use(cors());
+
+app.get("/", (req, res) => {
+  res.json({ message: "User Service On !!" });
+});
+
+// const db = require("./models");
+// const Role = db.role;
 
 //middleware
 app.use(express.json());
@@ -21,58 +30,99 @@ app.use("/information", UserInformationRouter);
 app.use("/follow", FollowRouter);
 app.use("/fav", FavRouter);
 
-
-console.log(process.env.MONGODB_URI);
+// console.log(process.env.MONGODB_URI);
+// routes
+require("./routes/AuthRoutes")(app);
+require("./routes/UserRoutes")(app);
 
 //configure mongoose
 mongoose.connect(
   process.env.MONGODB_URI,
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   },
   (err) => {
     if (err) {
       console.log(err);
     } else {
       console.log("Connected to MongoDB");
+      // initial();
     }
   }
 );
 
 // config gRPC
 
-
 const server = new grpc.Server();
 module.server = server;
-server.bind(`0.0.0.0:${process.env.GRPC_PORT}`,grpc.ServerCredentials.createInsecure());
+server.bind(
+  `0.0.0.0:${process.env.GRPC_PORT}`,
+  grpc.ServerCredentials.createInsecure()
+);
 
-var packageDefinition = protoLoader.loadSync(PROTO_PATH,{
+var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
   enums: String,
-  arrays: true
+  arrays: true,
 });
-var userProto =grpc.loadPackageDefinition(packageDefinition);
+var userProto = grpc.loadPackageDefinition(packageDefinition);
 
-server.addService(userProto.UserService.service,{
-  GetUserInformation: async (call,callback)=>{
-      let user = await userService.getUserById(call.request.user_id);
-      if(user) {
-          callback(null, user);
-      }else {
-          callback({
-              code: grpc.status.NOT_FOUND,
-              details: "Not found"
-          });
-      }
-  }
+server.addService(userProto.UserService.service, {
+  GetUserInformation: async (call, callback) => {
+    let user = await userService.getUserById(call.request.user_id);
+    if (user) {
+      callback(null, user);
+    } else {
+      callback({
+        code: grpc.status.NOT_FOUND,
+        details: "Not found",
+      });
+    }
+  },
 });
 
 app.listen(process.env.API_PORT, () => {
   server.start();
   console.log(`gRPC Server is running on port ${process.env.GRPC_PORT}`);
-  console.log(`Server is running on port ${process.env.API_PORT}`);
+  console.log(`REST is running on port ${process.env.API_PORT}`);
 });
 
 module.exports = app;
+
+// function initial() {
+//   Role.estimatedDocumentCount((err, count) => {
+//     if (!err && count === 0) {
+//       new Role({
+//         name: "user",
+//       }).save((err) => {
+//         if (err) {
+//           console.log("error", err);
+//         }
+
+//         console.log("added 'user' to roles collection");
+//       });
+
+//       new Role({
+//         name: "moderator",
+//       }).save((err) => {
+//         if (err) {
+//           console.log("error", err);
+//         }
+
+//         console.log("added 'moderator' to roles collection");
+//       });
+
+//       new Role({
+//         name: "admin",
+//       }).save((err) => {
+//         if (err) {
+//           console.log("error", err);
+//         }
+
+//         console.log("added 'admin' to roles collection");
+//       });
+//     }
+//   });
+// }
