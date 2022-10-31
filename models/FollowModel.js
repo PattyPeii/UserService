@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const FollowSchema = new Schema(
   {
+    user_id: String,
     following_user_id: String,
-    follower_user_id: String,
   },
   {
     timestamps: {

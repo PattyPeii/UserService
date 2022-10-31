@@ -1,0 +1,10 @@
+GET http://localhost:8001/follow/635ba528e9199de9c3726aca/following
+
+###
+GET http://localhost:8001/follow/635ba528e9199de9c3726aca/follower
+
+###
+POST  http://localhost:8001/follow/635ba528e9199de9c3726aca/635d48712bb3f5b0e23021b3
+
+###
+DELETE http://localhost:8001/follow/635ba528e9199de9c3726aca/635d48712bb3f5b0e23021b3
