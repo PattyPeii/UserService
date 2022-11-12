@@ -5,3 +5,4 @@ COPY package.json *.proto package-lock.json ./
 RUN npm install 
 COPY . .
 CMD ["npm", "start"]
+EXPOSE 30043
