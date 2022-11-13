@@ -87,23 +87,27 @@ server.addService(userProto.UserService.service, {
   },
 });
 
-server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
+// server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
+//   if (error) {
+//     throw error;
+//   }
+//   server.start();
+//   console.log(`gRPC Server is running on port ${PORT}`);
+// });
+
+
+app.listen(process.env.API_PORT, () => {
+  // server.start();
+  server.bindAsync(`0.0.0.0:${process.env.GRPC_PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
   if (error) {
     throw error;
   }
-  server.start();
-  console.log(`gRPC Server is running on port ${PORT}`);
+    server.start();
+  })
+  console.log(`gRPC Server is running on port ${process.env.GRPC_PORT}`);
+  console.log(`REST is running on port ${process.env.API_PORT}`);
 });
 
-
-// app.listen(process.env.API_PORT, () => {
-//   // server.start();
-//   server.bindAsync(`0.0.0.0:${process.env.GRPC_PORT}`, grpc.ServerCredentials.createInsecure(), () => {
-//     server.start();
-//   })
-//   console.log(`gRPC Server is running on port ${process.env.GRPC_PORT}`);
-//   console.log(`REST is running on port ${process.env.API_PORT}`);
-// });
 
 module.exports = app;
 
