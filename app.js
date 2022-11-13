@@ -52,7 +52,7 @@ mongoose.connect(
 );
 
 // config gRPC
-
+const PORT = process.env.PORT;
 
 var packageDefinition = protoLoader.loadSync(
   PROTO_PATH,
@@ -87,9 +87,13 @@ server.addService(userProto.UserService.service, {
   },
 });
 
-server.bindAsync(`0.0.0.0:${process.env.PORT}`, grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
+  if (error) {
+    throw error;
+  }
   server.start();
-})
+  console.log(`gRPC Server is running on port ${PORT}`);
+});
 
 
 // app.listen(process.env.API_PORT, () => {
