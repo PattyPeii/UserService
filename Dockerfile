@@ -5,4 +5,3 @@ COPY package.json *.proto package-lock.json ./
 RUN npm install 
 COPY . .
 CMD ["node", "app.js"]
-EXPOSE 443

@@ -87,7 +87,7 @@ server.addService(userProto.UserService.service, {
   },
 });
 
-server.bindAsync(`0.0.0.0:${process.env.GRPC_PORT}`, grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync(`0.0.0.0:${process.env.PORT}`, grpc.ServerCredentials.createInsecure(), () => {
   server.start();
 })
 
