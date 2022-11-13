@@ -4,9 +4,8 @@ const UserInformationRouter = require("./routes/UserInformationRoutes");
 const FollowRouter = require("./routes/FollowRoutes");
 const FavRouter = require("./routes/FavRoutes");
 
-var grpc = require("grpc");
+const grpc = require('@grpc/grpc-js')
 const PROTO_PATH = "./proto/user.proto";
-var grpc = require("grpc");
 var protoLoader = require("@grpc/proto-loader");
 const userService = require("./services/UserInformationService");
 
@@ -54,20 +53,25 @@ mongoose.connect(
 
 // config gRPC
 
+
+var packageDefinition = protoLoader.loadSync(
+  PROTO_PATH,
+  {keepCase: true,
+   longs: String,
+   enums: String,
+   defaults: true,
+   oneofs: true
+  });
+var userProto = grpc.loadPackageDefinition(packageDefinition);
+
 const server = new grpc.Server();
 module.server = server;
-server.bind(
-  `0.0.0.0:${process.env.GRPC_PORT}`,
-  grpc.ServerCredentials.createInsecure()
-);
+// server.bindAsync(
+//   `0.0.0.0:${process.env.GRPC_PORT}`,
+//   grpc.ServerCredentials.createInsecure()
+// );
 
-var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-  keepCase: true,
-  longs: String,
-  enums: String,
-  arrays: true,
-});
-var userProto = grpc.loadPackageDefinition(packageDefinition);
+
 
 server.addService(userProto.UserService.service, {
   GetUserInformation: async (call, callback) => {
@@ -83,8 +87,14 @@ server.addService(userProto.UserService.service, {
   },
 });
 
+
+
+
 app.listen(process.env.API_PORT, () => {
-  server.start();
+  // server.start();
+  server.bindAsync(`0.0.0.0:${process.env.GRPC_PORT}`, grpc.ServerCredentials.createInsecure(), () => {
+    server.start();
+  })
   console.log(`gRPC Server is running on port ${process.env.GRPC_PORT}`);
   console.log(`REST is running on port ${process.env.API_PORT}`);
 });
