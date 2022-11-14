@@ -131,3 +131,48 @@ exports.verifyToken = (req, res, next) => {
     next();
   });
 };
+
+exports.account = (req, res) => {
+  // let token = req.headers["Authorization"];
+  const authHeader = req.headers["authorization"];
+
+  let token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(403).send({
+      message: "No token provided!",
+    });
+  }
+
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!",
+      });
+    }
+    // req.userId = decoded.id;
+
+    User.findOne({
+      id: decoded.id,
+    })
+      .populate("roles", "-__v")
+      .exec((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        var authorities = [];
+
+        for (let i = 0; i < user.roles.length; i++) {
+          authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+        }
+        res.status(200).send({
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          roles: authorities,
+        });
+      });
+  });
+};

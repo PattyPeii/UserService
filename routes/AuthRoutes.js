@@ -21,5 +21,6 @@ module.exports = function (app) {
 
   app.post("/auth/signin", controller.signin);
   app.get("/auth/verify", controller.verifyToken);
+  app.get("/auth/account", controller.account);
 
 };
