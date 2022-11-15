@@ -151,9 +151,9 @@ exports.account = (req, res) => {
       });
     }
     // req.userId = decoded.id;
-
+    console.log(decoded.id);
     User.findOne({
-      id: decoded.id,
+      _id: decoded.id,
     })
       .populate("roles", "-__v")
       .exec((err, user) => {
