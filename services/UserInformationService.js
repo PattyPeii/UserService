@@ -13,6 +13,7 @@ exports.createUser = async (user) => {
 //   return await UserModel.findById(id);
 // };
 exports.getUserById = async (id) => {
+  console.log('id' + id)
   return await UserModel.findOne({ user_id: id });
 };
 

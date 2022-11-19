@@ -8,6 +8,13 @@ const grpc = require('@grpc/grpc-js')
 const PROTO_PATH = "./proto/user.proto";
 var protoLoader = require("@grpc/proto-loader");
 const userService = require("./services/UserInformationService");
+const swaggerUi = require('swagger-ui-express')
+
+const swaggerAuthRoutesRoutesFile = require('./swagger_output_AuthRoutes.json')
+const swaggerFavRoutesRoutesFile = require('./swagger_output_FavRoutes.json')
+const swaggerFollowRoutesRoutesFile = require('./swagger_output_UserInformationRoutes.json')
+const swaggerUserInformationRoutesFile = require('./swagger_output_UserInformationRoutes.json')
+const swaggerUserRoutesFile = require('./swagger_output_UserRoutes.json')
 
 const app = express();
 
@@ -28,6 +35,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/information", UserInformationRouter);
 app.use("/follow", FollowRouter);
 app.use("/fav", FavRouter);
+
+// swagger doc
+var options = {}
+
+app.use('/doc/AuthRoutes', swaggerUi.serveFiles(swaggerAuthRoutesRoutesFile, options), swaggerUi.setup(swaggerAuthRoutesRoutesFile));
+
+app.use('/doc/FavRoutes', swaggerUi.serveFiles(swaggerFavRoutesRoutesFile, options), swaggerUi.setup(swaggerFavRoutesRoutesFile));
+
+app.use('/doc/FollowRoutes', swaggerUi.serveFiles(swaggerFollowRoutesRoutesFile, options), swaggerUi.setup(swaggerFollowRoutesRoutesFile));
+
+app.use('/doc/UserInformationRoutes', swaggerUi.serveFiles(swaggerUserInformationRoutesFile, options), swaggerUi.setup(swaggerUserInformationRoutesFile));
+
+app.use('/doc/UserRoutes', swaggerUi.serveFiles(swaggerUserRoutesFile, options), swaggerUi.setup(swaggerUserRoutesFile));
+
+// app.use('/doc/AuthRoutes', swaggerUi.serve, swaggerUi.setup(swaggerAuthRoutesRoutesFile));
+// app.use('/doc/FavRoutes', swaggerUi.serve, swaggerUi.setup(swaggerFavRoutesRoutesFile));
+// app.use('/doc/FollowRoutes', swaggerUi.serve, swaggerUi.setup(swaggerFollowRoutesRoutesFile));
+// app.use('/doc/UserInformationRoutes', swaggerUi.serve, swaggerUi.setup(swaggerUserInformationRoutesFile));
+// app.use('/doc/UserRoutes', swaggerUi.serve, swaggerUi.setup(swaggerUserRoutesFile));
 
 // console.log(process.env.MONGODB_URI);
 // routes

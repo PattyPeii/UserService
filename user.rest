@@ -1,30 +1,55 @@
-GET http://localhost:8001/information
+GET https://api-6xr77bk9.an.gateway.dev/information
 
 ###
-GET http://localhost:8080/information/1
+GET https://api-6xr77bk9.an.gateway.dev/information/635ba528e9199de9c3726aca
+
 
 ###
-POST  http://localhost:8080/information
+POST  https://api-6xr77bk9.an.gateway.dev/information
 Content-Type: application/json
 
 {
-"user_id": 3,
-"fullname": "Patty",
+"fullname": "May",
 "email": "test@gmail.com",
 "phone": "099999999",
 "birthday": "1995-03-25"
 }
 
 ###
-DELETE http://localhost:8080/information/2
+DELETE https://api-6xr77bk9.an.gateway.dev/information/637760d33ebb7754922fcace
 
 ###
-PUT  http://localhost:8080/information/3
+PUT  https://api-6xr77bk9.an.gateway.dev/information/637760d33ebb7754922fcace
 Content-Type: application/json
 
 {
-"user_id": 3,
-"fullname": "Pattys",
+"fullname": "May Chanapa",
+"email": "test@gmail.com",
+"phone": "099999999",
+"birthday": "1995-03-25"
+}
+
+
+
+PUT  https://api-6xr77bk9.an.gateway.dev/information/637760d33ebb7754922fcace
+Content-Type: application/json
+
+{
+"fullname": "May Chanapa",
+"email": "test@gmail.com",
+"phone": "099999999",
+"birthday": "1995-03-25"
+}
+
+###
+DELETE http://user.cooknet.cf/information/637760d33ebb7754922fcace
+
+###
+PUT  http://user.cooknet.cf/information/637760d33ebb7754922fcace
+Content-Type: application/json
+
+{
+"fullname": "May Chanapa",
 "email": "test@gmail.com",
 "phone": "099999999",
 "birthday": "1995-03-25"
