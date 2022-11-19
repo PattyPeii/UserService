@@ -5,6 +5,7 @@ const Role = db.role;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const userService = require("../services/UserInformationService");
 
 exports.signup = (req, res) => {
   const user = new User({
@@ -14,6 +15,8 @@ exports.signup = (req, res) => {
   });
 
   user.save((err, user) => {
+    // console.log(user.id);
+    req.body['user_id'] = user.id
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -31,13 +34,18 @@ exports.signup = (req, res) => {
           }
 
           user.roles = roles.map((role) => role._id);
-          user.save((err) => {
+          user.save(async (err) => {
             if (err) {
               res.status(500).send({ message: err });
               return;
             }
 
-            res.send({ message: "User was registered successfully!" });
+            try {
+              await userService.createUser(req.body);
+              res.send({ message: "User was registered successfully!" });
+            } catch (err) {
+              res.status(500).json({ error: err.message });
+            }
           });
         }
       );
@@ -49,13 +57,18 @@ exports.signup = (req, res) => {
         }
 
         user.roles = [role._id];
-        user.save((err) => {
+        user.save(async (err) => {
           if (err) {
             res.status(500).send({ message: err });
             return;
           }
 
-          res.send({ message: "User was registered successfully!" });
+          try {
+            await userService.createUser(req.body);
+            res.send({ message: "User was registered successfully!" });
+          } catch (err) {
+            res.status(500).json({ error: err.message });
+          }
         });
       });
     }

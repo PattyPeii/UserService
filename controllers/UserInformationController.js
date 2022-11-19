@@ -1,7 +1,5 @@
 const userService = require("../services/UserInformationService");
 
-
-
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
@@ -34,7 +32,8 @@ exports.updateUser = async (req, res) => {
   try {
     const user = await userService.updateUser(req.params.id, req.body);
     if (user) res.json({ data: user, status: "success" });
-    else res.json({status: "fail", message: `id : ${req.params.id} not found` });
+    else
+      res.json({ status: "fail", message: `id : ${req.params.id} not found` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
