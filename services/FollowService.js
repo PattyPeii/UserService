@@ -10,8 +10,10 @@ exports.getFollowing = async (user_id) => {
 
 // Create
 exports.initFollow = async (user_id, following_user_id) => {
-  if (followModel.find({user_id:user_id, following_user_id:following_user_id}) != []) {
-    return {data: "Already followed"}
+  var followed = await followModel.findOne({user_id:user_id, following_user_id:following_user_id})
+
+  if (followed) {
+    return {message: "Already followed"}
   }
   return await followModel.create({user_id:user_id, following_user_id:following_user_id});
 };
