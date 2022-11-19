@@ -7,7 +7,8 @@ const Role = db.role;
 
 verifyToken = (req, res, next) => {
   // let token = req.headers["Authorization"];
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers["x-forwarded-authorization"];
+  console.log(req.headers);
   let token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
@@ -90,7 +91,7 @@ isModerator = (req, res, next) => {
 };
 
 isOwner = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers["x-forwarded-authorization"];
   let token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
@@ -105,7 +106,7 @@ isOwner = (req, res, next) => {
         message: "Unauthorized!",
       });
     }
-    if(decoded.id != req.params.id){
+    if (decoded.id != req.params.id) {
       return res.status(401).send({
         message: "Unauthorized (Not Owner) !",
       });
@@ -119,5 +120,6 @@ const authJwt = {
   verifyToken,
   isAdmin,
   isModerator,
+  isOwner,
 };
 module.exports = authJwt;

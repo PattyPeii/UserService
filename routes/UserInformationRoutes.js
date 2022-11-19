@@ -38,9 +38,9 @@ module.exports = function (app) {
   app.get("/information", [authJwt.verifyToken, authJwt.isAdmin], getAllUsers);
   app.post("/information", createUser);
 
-  app.get("/information/:id", [isOwner], getUserById);
-  app.put("/information/:id", [isOwner], updateUser);
-  app.delete("/information/:id", [isOwner], deleteUser);
+  app.get("/information/:id", [authJwt.isOwner], getUserById);
+  app.put("/information/:id", [authJwt.isOwner], updateUser);
+  app.delete("/information/:id", [authJwt.isOwner], deleteUser);
 
   // app.get(
   //   "/test/admin",
