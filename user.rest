@@ -1,7 +1,7 @@
 GET https://api-6xr77bk9.an.gateway.dev/information
 
 ###
-GET https://api-6xr77bk9.an.gateway.dev/information/635ba528e9199de9c3726aca
+GET https://api-6xr77bk9.an.gateway.dev/information/63779ec808c7a025c8653884
 
 
 ###
@@ -9,7 +9,7 @@ POST  https://api-6xr77bk9.an.gateway.dev/information
 Content-Type: application/json
 
 {
-"fullname": "May",
+"fullname": "May 3",
 "email": "test@gmail.com",
 "phone": "099999999",
 "birthday": "1995-03-25"
@@ -45,7 +45,7 @@ Content-Type: application/json
 DELETE http://user.cooknet.cf/information/637760d33ebb7754922fcace
 
 ###
-PUT  http://user.cooknet.cf/information/637760d33ebb7754922fcace
+GET  http://user.cooknet.cf/information/637760d33ebb7754922fcace
 Content-Type: application/json
 
 {
@@ -54,3 +54,11 @@ Content-Type: application/json
 "phone": "099999999",
 "birthday": "1995-03-25"
 }
+
+
+
+###
+GET https://api-6xr77bk9.an.gateway.dev/feedback
+
+###
+GET https://recipeservice-ewzql6uxba-uc.a.run.app/feed

@@ -1,22 +1,46 @@
-GET http://localhost:5001/recipe
+GET https://api-6xr77bk9.an.gateway.dev/recipe
+
+GET https://recipeservice-ewzql6uxba-uc.a.run.app/feed
 
 ###
-GET http://localhost:5001/recipe/1
+GET https://recipeservice-ewzql6uxba-uc.a.run.app/recipe
 
 ###
-POST  http://localhost:5001/recipe
+GET https://api-6xr77bk9.an.gateway.dev/recipe/32
+
+###
+POST  https://api-6xr77bk9.an.gateway.dev/recipe
 Content-Type: application/json
 
 {
-    "name": "Donut",
-    "description":"Sweet"
+    "name": "SOMTUM",
+    "description":"ZAAP NUA",
+    "image_url": null,
+    "user_id": "635ba528e9199de9c3726aca",
+    "user": {
+      "user_id": "635ba528e9199de9c3726aca",
+      "fullname": "Fair Weerapat"
+    },
+    "ingrediants": [
+      {
+        "name": null,
+        "amount": null,
+        "unit": null
+      }
+    ],
+    "instructions": [],
+    "tools": [
+      {
+        "tool": null
+      }
+    ]
 }
 
 ###
-DELETE http://localhost:5001/recipe/15
+DELETE https://api-6xr77bk9.an.gateway.dev/recipe/30
 
 ###
-PUT  http://localhost:5001/recipe/1
+PUT  https://api-6xr77bk9.an.gateway.dev/recipe/1
 Content-Type: application/json
 
 {
