@@ -1,5 +1,22 @@
-const express = require("express");
+// const express = require("express");
 
+// const {
+//   getAllUsers,
+//   createUser,
+//   getUserById,
+//   updateUser,
+//   deleteUser,
+//   getUserInformation,
+// } = require("../controllers/UserInformationController");
+
+// const router = express.Router();
+
+// router.route("/").get(getAllUsers).post(createUser);
+// router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
+
+// module.exports = router;
+
+const { authJwt } = require("../middlewares");
 const {
   getAllUsers,
   createUser,
@@ -9,13 +26,25 @@ const {
   getUserInformation,
 } = require("../controllers/UserInformationController");
 
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
-const router = express.Router();
+  app.get("/information", [authJwt.verifyToken, authJwt.isAdmin], getAllUsers);
+  app.post("/information", createUser);
 
-router.route("/").get(getAllUsers).post(createUser);
-router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
+  app.get("/information/:id", [isOwner], getUserById);
+  app.put("/information/:id", [isOwner], updateUser);
+  app.delete("/information/:id", [isOwner], deleteUser);
 
-
-module.exports = router;
-
-
+  // app.get(
+  //   "/test/admin",
+  //   [authJwt.verifyToken, authJwt.isAdmin],
+  //   controller.adminBoard
+  // );
+};
