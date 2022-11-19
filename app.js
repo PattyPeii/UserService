@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const UserInformationRouter = require("./routes/UserInformationRoutes");
+// const UserInformationRouter = require("./routes/UserInformationRoutes");
 const FollowRouter = require("./routes/FollowRoutes");
 const FavRouter = require("./routes/FavRoutes");
 
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/information", UserInformationRouter);
+// app.use("/information", UserInformationRouter);
 app.use("/follow", FollowRouter);
 app.use("/fav", FavRouter);
 
@@ -59,6 +59,7 @@ app.use('/doc/UserRoutes', swaggerUi.serveFiles(swaggerUserRoutesFile, options),
 // routes
 require("./routes/AuthRoutes")(app);
 require("./routes/UserRoutes")(app);
+require("./routes/UserInformationRoutes")(app);
 
 //configure mongoose
 mongoose.connect(
