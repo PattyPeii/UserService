@@ -123,7 +123,7 @@ exports.signin = (req, res) => {
 
 exports.verifyToken = (req, res, next) => {
   // let token = req.headers["Authorization"];
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers["x-forwarded-authorization"];
   console.log(authHeader);
 
   let token = authHeader && authHeader.split(" ")[1];
@@ -147,7 +147,7 @@ exports.verifyToken = (req, res, next) => {
 
 exports.account = (req, res) => {
   // let token = req.headers["Authorization"];
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers["x-forwarded-authorization"];
 
   let token = authHeader && authHeader.split(" ")[1];
 
