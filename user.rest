@@ -61,4 +61,5 @@ Content-Type: application/json
 GET https://api-6xr77bk9.an.gateway.dev/feedback
 
 ###
-GET https://recipeservice-ewzql6uxba-uc.a.run.app/feed
+GET https://recipeservice-ewzql6uxba-uc.a.run.app/recipe
+
